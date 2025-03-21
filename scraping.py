@@ -11,6 +11,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.support.expected_conditions import text_to_be_present_in_element
 from selenium.common.exceptions import NoSuchElementException, TimeoutException
+from datetime import datetime
 
 
 # . Options pour éviter la détection Selenium
@@ -29,13 +30,13 @@ driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), opti
 driver.maximize_window()
 
 # URL de base pour la pagination
-base_url = "http://www.tunisie-annonce.com/AnnoncesImmobilier.asp?rech_page_num={}"
+base_url = "http://www.tunisie-annonce.com/AnnoncesImmobilier.asp?rech_order_by=11&rech_page_num={}"
 
 # Liste pour stocker les données
 annonces = []
 
 # Boucle sur chaque page (1 à 1002)
-for page in range(1, 1003):  
+for page in range(133, 512):  # les pages ou la dete est entre 01/01/2025 et 28/02/2025
     url = base_url.format(page)
     print(f"Scraping page {page}...")
 
@@ -50,58 +51,65 @@ for page in range(1, 1003):
         try:
             cols = row.find_elements(By.TAG_NAME, "td")
             if len(cols) > 10 and cols[1].text.strip()!="":
-            # Extraire les données
-                region = cols[1].text.strip()
-                print(region)
-                nature = cols[3].text.strip()
-                type_ = cols[5].text.strip()
-                texte = cols[7].text.strip()
-                prix = cols[9].text.strip()
                 modifie = cols[11].text.strip()
 
                 try:
-                    link_element = cols[7].find_element(By.CSS_SELECTOR, "a")
-                    details_link = link_element.get_attribute("href")
-                    print(details_link)
-                    driver.execute_script(f"window.open('{details_link}', '_blank');")
+                    date_modifie = datetime.strptime(modifie, "%d/%m/%Y")
+                    date_min = datetime(2025, 1, 1)  # 01/01/2025
+                    date_max = datetime(2025, 2, 28)  # 29/02/2025
+                    if date_min <= date_modifie <= date_max:
+                        # Extraire les données
+                            region = cols[1].text.strip()
+                            nature = cols[3].text.strip()
+                            type_ = cols[5].text.strip()
+                            texte = cols[7].text.strip()
+                            prix = cols[9].text.strip()
+                            modifie = cols[11].text.strip()
 
-    # **Changer vers le nouvel onglet (dernier ouvert)**
-                    driver.switch_to.window(driver.window_handles[-1])
-                    driver.get(details_link)
-            
-                    # Extraire la ligne qui contient "Surface"
-                    try:
-                        surface = driver.find_element(By.XPATH, ".//tr[td[contains(text(),'Surface')]]/td[2]").text
-                    except:
-                        surface="non disponible"
-                    # Extraire la ligne qui contient "Texte"
-                    try:
-                        desc = driver.find_element(By.XPATH, ".//tr[td[contains(text(),'Texte')]]/td[2]").text
-                    except:
-                        desc="Non disponible"
+                            try:
+                                link_element = cols[7].find_element(By.CSS_SELECTOR, "a")
+                                details_link = link_element.get_attribute("href")
+                                driver.execute_script(f"window.open('{details_link}', '_blank');")
 
-                    try:
-                        loc = driver.find_element(By.XPATH, ".//tr[td[contains(text(),'Localisation')]]/td[2]").text
-                    except:
-                        loc="Non disponible"
-                    
-                    # Exemple : Si tu veux garder uniquement les lignes paires
-                    try:
-                        cellphone_data = driver.find_element(By.XPATH, "//li[@class='cellphone']/span").text
-                    except:
-                        cellphone_data="Non disponible"
+                 # **Changer vers le nouvel onglet (dernier ouvert)**
+                                driver.switch_to.window(driver.window_handles[-1])
+                                driver.get(details_link)
+                        
+                                # Extraire la ligne qui contient "Surface"
+                                try:
+                                    surface = driver.find_element(By.XPATH, ".//tr[td[contains(text(),'Surface')]]/td[2]").text
+                                except:
+                                    surface="non disponible"
+                                # Extraire la ligne qui contient "Texte"
+                                try:
+                                    desc = driver.find_element(By.XPATH, ".//tr[td[contains(text(),'Texte')]]/td[2]").text
+                                except:
+                                    desc="Non disponible"
 
+                                try:
+                                    loc = driver.find_element(By.XPATH, ".//tr[td[contains(text(),'Localisation')]]/td[2]").text
+                                except:
+                                    loc="Non disponible"
+                                
+                                # Exemple : Si tu veux garder uniquement les lignes paires
+                                try:
+                                    cellphone_data = driver.find_element(By.XPATH, "//li[@class='cellphone']/span").text
+                                except:
+                                    cellphone_data="Non disponible"
+
+                            except:
+                                continue  # Passer à l'hôtel suivant
+                                    # Tester l'ouverture d'un nouvel onglet
+                        # **Ouvrir un nouvel onglet et basculer dessus**
+
+
+                            driver.close()
+                            driver.switch_to.window(driver.window_handles[0])
+                
+                        # Ajouter aux résultats
+                            annonces.append([region, nature, type_, texte, prix, modifie,surface,desc,cellphone_data,loc,details_link])
                 except:
-                    continue  # Passer à l'hôtel suivant
-                        # Tester l'ouverture d'un nouvel onglet
-              # **Ouvrir un nouvel onglet et basculer dessus**
-
-
-                driver.close()
-                driver.switch_to.window(driver.window_handles[0])
-    
-            # Ajouter aux résultats
-                annonces.append([region, nature, type_, texte, prix, modifie,surface,desc,cellphone_data,loc,details_link])
+                    continue
         except Exception as e:
                 print(f"Erreur lors du traitement d'une ligne: {e}")
 
@@ -112,7 +120,7 @@ for page in range(1, 1003):
 driver.quit()
 
 # Sauvegarde dans un fichier Excel
-df = pd.DataFrame(annonces, columns=["Région", "Nature", "Type", "Texte annonce", "Prix", "Modifiée","Superficie","Description","Numero","Localisation","details_link"])
+df = pd.DataFrame(annonces, columns=["Région", "Nature", "Type", "Texte annonce", "Prix", "Ajoutée","Superficie","Description","Numero","Localisation","details_link"])
 df.to_excel("annonces_tunisie.xlsx", index=False)
 
 print("Scraping terminé. Données enregistrées dans 'annonces_tunisie.xlsx'.")
