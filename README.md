@@ -13,7 +13,7 @@ Python 3.10+
 FastAPI (pour l'API)
 Uvicorn (pour lancer le serveur)
 SQLite3 (base de données intégrée)
-Requests / BeautifulSoup4 (pour le scraping)
+Requests / selenium (pour le scraping)
 
 **🔧 Installation**
 Créer un environnement virtuel 
