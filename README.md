@@ -36,7 +36,16 @@ ou bien avec postman
 **BDD(sql lite)**
 pour mieux visualisation installer DB Browser for SQLite
 
-**Auteur:
+
+ **🧠 Endpoints API disponibles**
+
+GET / : Page d'accueil simple
+
+POST /scrape : Lance le scraping et stocke les annonces dans la base de données _annonces.db_.
+
+GET /annonces : Récupère toutes les annonces stockées.
+
+****Auteur**:
   Arwa Kthiri &
   Aziz Seblaoui**
 
