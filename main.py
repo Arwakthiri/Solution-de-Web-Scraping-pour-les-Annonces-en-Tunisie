@@ -66,8 +66,10 @@ def scrape_annonces():
 
     base_url = "http://www.tunisie-annonce.com/AnnoncesImmobilier.asp?rech_order_by=11&rech_page_num={}"
     annonces = []
+    page=1
+    #for page in range(1, 1003):  # Réduire le nombre de pages pour le test
+    while True:
 
-    for page in range(1, 1003):  # Réduire le nombre de pages pour le test
         url = base_url.format(page)
         print(f"Scraping page {page}...")
 
@@ -75,6 +77,9 @@ def scrape_annonces():
         time.sleep(2)
 
         rows = driver.find_elements(By.XPATH, "(//tr[@bgcolor='#294a73']/following-sibling::tr)")
+        if not rows:
+            break
+            
         for row in rows:
             try:
                 cols = row.find_elements(By.TAG_NAME, "td")
@@ -131,6 +136,7 @@ def scrape_annonces():
                 print(f"Erreur ligne: {e}")
 
         print(f"Page {page} récupérée avec succès!")
+        page += 1
 
     driver.quit()
 
