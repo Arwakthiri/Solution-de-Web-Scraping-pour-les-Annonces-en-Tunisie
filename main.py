@@ -67,7 +67,7 @@ def scrape_annonces():
     base_url = "http://www.tunisie-annonce.com/AnnoncesImmobilier.asp?rech_order_by=11&rech_page_num={}"
     annonces = []
 
-    for page in range(133, 135):  # Réduire le nombre de pages pour le test
+    for page in range(1, 1003):  # Réduire le nombre de pages pour le test
         url = base_url.format(page)
         print(f"Scraping page {page}...")
 
