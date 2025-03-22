@@ -37,6 +37,6 @@ ou bien avec postman
 pour mieux visualisation installer DB Browser for SQLite
 
 **Auteur:
-  Arwa Kthiri
+  Arwa Kthiri &
   Aziz Seblaoui**
 
