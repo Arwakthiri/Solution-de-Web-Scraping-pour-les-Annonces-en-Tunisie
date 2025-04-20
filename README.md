@@ -45,18 +45,30 @@ POST /scrape : Lance le scraping et stocke les annonces dans la base de données
 
 GET /annonces : Récupère toutes les annonces stockées.
 
-##  Partie 2 : Dashboard Interactif
+## Partie 2 : Dashboard Interactif
 
-- Statistiques sur les annonces à l’aide de **Pandas**
-- Visualisation via **Plotly** (graphique circulaire, barres, histogrammes…)
-- Tableau interactif avec recherche
-- Filtres dynamiques (type de bien, région)
-  
-**Lancer le dashboard :**
-bash
-Copy
-Edit
-python dashboard/app.py
+Le tableau de bord interactif est construit en utilisant **Dash**, **Plotly**, et **Pandas** pour afficher des statistiques et des visualisations sur les annonces immobilières.
+
+### Fonctionnalités du Dashboard :
+- **Statistiques sur les annonces** : Traitement des données avec **Pandas** pour extraire des informations pertinentes.
+- **Visualisation via Plotly** : Création de différents graphiques (graphique circulaire, barres, histogrammes, etc.).
+- **Tableau interactif** avec recherche : Permet de rechercher et filtrer les annonces directement dans le tableau.
+- **Filtres dynamiques** : Les utilisateurs peuvent filtrer les annonces par type de bien (Appartement, Maison, Terrain, etc.) et par région.
+
+### Lancer le Dashboard
+
+1. **Installer les dépendances nécessaires** :
+   Dans votre terminal, assurez-vous d'abord d'avoir installé **Dash** et **Plotly** :
+
+   pip install dash plotly pandas
+**2. Lancer l'application Dashboard**
+   python app.py
+
+3. **Structure des fichiers**
+app.py : Contient le tableau de bord interactif construit avec Dash. C'est là que l'interface utilisateur (UI) et les graphiques sont définis.
+
+utils.py : Contient des fonctions utiles pour le traitement des données et le calcul des statistiques (moyenne des prix, superficie moyenne, etc.).
+
 
 ****Auteur**:
   Arwa Kthiri &
