@@ -3,6 +3,7 @@ import pandas as pd
 from utils import load_data, get_stats
 import plotly.express as px
 
+
 df = load_data()
 app = Dash(__name__)
 
@@ -113,12 +114,11 @@ def update_dashboard(region, type_bien):
     barmode="group",
     title="Répartition des annonces par type et nature"
 )
-
-
+    
     prix_moy, sup_moy = get_stats(dff)
     stats = f" Prix moyen : {prix_moy} DT |  Surface moyenne : {sup_moy} m²"
 
     return fig_types, fig_regions, fig_prix,fig_prix_region,fig_nature, stats, dff.to_dict("records")
-
+    
 if __name__ == "__main__":
     app.run(debug=True)
