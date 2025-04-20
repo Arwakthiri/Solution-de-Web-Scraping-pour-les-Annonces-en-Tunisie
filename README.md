@@ -52,6 +52,12 @@ GET /annonces : Récupère toutes les annonces stockées.
 - Tableau interactif avec recherche
 - Filtres dynamiques (type de bien, région)
   
+**Lancer le dashboard :**
+bash
+Copy
+Edit
+python dashboard/app.py
+
 ****Auteur**:
   Arwa Kthiri &
   Aziz Seblaoui**
