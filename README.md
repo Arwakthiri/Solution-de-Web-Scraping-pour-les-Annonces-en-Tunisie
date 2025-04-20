@@ -1,12 +1,12 @@
 # Solution-de-Web-Scraping-pour-les-Annonces-en-Tunisie
 
-**📌 Description**
+** Description**
 
 Ce projet est une application complète de scraping qui extrait des annonces depuis le web, les enregistre dans une base de données SQLite, et expose une API via FastAPI pour interagir facilement avec les données (récupération, ajout, etc.).
 
 L'objectif est d'automatiser le scraping, de stocker les résultats de manière structurée, et de fournir une API REST pour accéder aux données.
 
-**🛠️ Prérequis**
+** Prérequis**
 
 Python 3.10+
 
@@ -15,7 +15,7 @@ Uvicorn (pour lancer le serveur)
 SQLite3 (base de données intégrée)
 Requests / selenium (pour le scraping)
 
-**🔧 Installation**
+** Installation**
 Créer un environnement virtuel 
  python -m venv venv
  source venv/bin/activate
@@ -25,7 +25,7 @@ Créer un environnement virtuel
  creation du fichier main.py et requirements.txt
  pip freeze > requirements.txt  pour  sauvegarder les dépendances :
 
- 🚀 **Lancer le projet**
+  **Lancer le projet**
 
 Lancer le serveur API :  uvicorn main:app --reload
 Accéder à l'API dans le navigateur :
