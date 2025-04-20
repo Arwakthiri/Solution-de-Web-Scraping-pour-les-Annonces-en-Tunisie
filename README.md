@@ -45,6 +45,13 @@ POST /scrape : Lance le scraping et stocke les annonces dans la base de données
 
 GET /annonces : Récupère toutes les annonces stockées.
 
+##  Partie 2 : Dashboard Interactif
+
+- Statistiques sur les annonces à l’aide de **Pandas**
+- Visualisation via **Plotly** (graphique circulaire, barres, histogrammes…)
+- Tableau interactif avec recherche
+- Filtres dynamiques (type de bien, région)
+  
 ****Auteur**:
   Arwa Kthiri &
   Aziz Seblaoui**
