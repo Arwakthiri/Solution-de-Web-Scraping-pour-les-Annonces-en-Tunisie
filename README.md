@@ -37,7 +37,7 @@ ou bien avec postman
 pour mieux visualisation installer DB Browser for SQLite
 
 
- **🧠 Endpoints API disponibles**
+ ** Endpoints API disponibles**
 
 GET / : Page d'accueil simple
 
