@@ -61,7 +61,8 @@ Le tableau de bord interactif est construit en utilisant **Dash**, **Plotly**, e
    Dans votre terminal, assurez-vous d'abord d'avoir installé **Dash** et **Plotly** :
 
    pip install dash plotly pandas
-**2. Lancer l'application Dashboard**
+   
+2.  **Lancer l'application Dashboard**
    python app.py
 
 3. **Structure des fichiers**
